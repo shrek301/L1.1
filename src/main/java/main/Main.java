@@ -1,9 +1,13 @@
 package main;
 
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.AllRequestsServlet;
+
+import java.util.logging.Logger;
+
 
 /**
  * @author v.chibrikov
@@ -14,8 +18,9 @@ import servlets.AllRequestsServlet;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
+       final Logger LOGGER =
+               Logger.getLogger(Main.class.getName());
         AllRequestsServlet allRequestsServlet = new AllRequestsServlet();
-
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(allRequestsServlet), "/*");
 
@@ -23,6 +28,8 @@ public class Main {
         server.setHandler(context);
 
         server.start();
+        LOGGER.info("Server started");
+
         server.join();
     }
 }
